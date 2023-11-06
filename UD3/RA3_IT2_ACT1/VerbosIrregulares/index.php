@@ -112,28 +112,27 @@ if (isset($_POST['envresp'])) {
                         foreach ($verbosIrregulares[$h] as $p => $verbo) {
                             $tdClass = '';
                             $marcador = '';
-
-                            for ($i = 0; $i <= 3; $i++) {
-                                $nombre_input2 = 'input' . $h . $i;
-                                if (isset($inputs[$nombre_input2]) && $verbo == $inputs[$nombre_input2]) {
-                                    $marcador = '✔';
-                                    $tdClass = 'verdadero';
-                                    break;
-                                }
-                            }
-
-                            if ($marcador !== '✔') {
-                                if (isset($inputs['input' . $h . $p])) {
-                                    $marcador = '✘';
-                                    $tdClass = 'falso';
+                            $nombre_input2 = 'input' . $h . $p;
+                            if (isset($inputs[$nombre_input2])) {
+                                if ($verbosIrregulares[$h][$p] == $inputs[$nombre_input2]) {
+                                    $contadorsolucion++;
+                                    $tdClass = "verdadero";
+                                    $marcador = "✔";
+                                    echo "<td id='$tdClass'>" . $verbo . " " . $marcador . "</td>";
                                 } else {
-                                    $marcador = '';
+                                    $tdClass = "falso";
+                                    $marcador = "X";
+
+                                    echo "<td id='$tdClass'>" . $verbo . " " . $marcador . "</td>";
                                 }
+                            }else{
+                                echo "<td id='$tdClass'>" . $verbo . " " . $marcador . "</td>";
                             }
 
 
 
-                            echo "<td id='$tdClass'>" . $verbo . " " . $marcador . "</td>";
+
+                            
                         }
 
                         echo "</tr>";
@@ -147,12 +146,6 @@ if (isset($_POST['envresp'])) {
 
 
                     for ($p = 0; $p <= 3; $p++) {
-                        $nombre_input2 = 'input' . $h . $p;
-                        if (isset($inputs[$nombre_input2])) {
-                            if ($verbosIrregulares[$h][$p] == $inputs[$nombre_input2]) {
-                                $contadorsolucion++;
-                            }
-                        }
                     }
                 }
                 if (count($inputs) != 0) {
